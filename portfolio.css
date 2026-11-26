@@ -77,3 +77,60 @@ footer { border-top: 1px solid var(--border); color: var(--muted); padding: 20px
   @view-transition { navigation: auto; }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 180ms; }
 }
+
+/* Layer a perspective grid behind the shared page layout. */
+body {
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 82% 14%, #dce8fb 0%, transparent 43rem),
+    linear-gradient(160deg, #f8fafd, #eef2f8);
+}
+body::before {
+  content: '';
+  position: fixed;
+  z-index: -1;
+  inset: 25% -35% -22%;
+  pointer-events: none;
+  background-image: linear-gradient(#6581af38 1px, transparent 1px),
+    linear-gradient(90deg, #6581af38 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: perspective(520px) rotateX(57deg);
+  transform-origin: center 72%;
+  mask-image: linear-gradient(transparent 3%, #000 55%, transparent 98%);
+}
+header { background: #ffffffed; }
+nav a, .button, .chips li { border-radius: 8px; }
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(118deg, #fff 28%, #f8faff 63%, #e8effb);
+  box-shadow: 0 16px 40px #243b6414, 0 3px 9px #243b640c;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  width: clamp(150px, 31vw, 345px);
+  aspect-ratio: 1;
+  right: -5%;
+  bottom: -44%;
+  border: 1px solid #99b2d565;
+  border-radius: 18px;
+  transform: perspective(580px) rotateX(28deg) rotateY(-18deg) rotateZ(-26deg);
+  transform-origin: center;
+}
+.hero::before {
+  background: linear-gradient(140deg, #f9fcff66, #bfd3f555);
+  box-shadow: inset 1px 2px 3px #ffffffac, 18px 22px 50px #48699424;
+}
+.hero::after { translate: -30px -26px; border-color: #8ca9d34a; }
+.card { border-radius: 14px; box-shadow: 0 6px 20px #243b640d; }
+.featured { background: linear-gradient(120deg, #edf4ff, #fbfcff); }
+@media (max-width: 650px) {
+  .hero { border-radius: 14px; }
+  .card { border-radius: 12px; }
+  .hero::before, .hero::after { right: -16%; bottom: -36%; }
+}
